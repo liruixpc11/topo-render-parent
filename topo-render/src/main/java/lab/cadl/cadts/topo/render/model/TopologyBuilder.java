@@ -5,10 +5,10 @@ import java.awt.Image;
 /**
  */
 public class TopologyBuilder {
-    private static final double WIDTH = 20;
-    private static final double HEIGHT = 20;
+    private static final double WIDTH = 30;
+    private static final double HEIGHT = 30;
 
-    private int locationIndex = 0;
+    private int locationIndex = 1;
     private Topology topology = new Topology();
 
     public Topology build() {
@@ -31,8 +31,17 @@ public class TopologyBuilder {
         }
     }
 
-    public TopologyBuilder addNode(String name, Image image) {
-        topology.addNode(name, image, nextLocation());
+    public TopologyBuilder addNode(String name, Image image,int x,int y) {
+        topology.addNode(name, image, new Location(x,y,WIDTH,HEIGHT));
+        return this;
+    }
+
+    public TopologyBuilder addNodeDecorator(String name, NodeDecorator ...decorators) {
+        Node node = topology.checkNode(name);
+        for (NodeDecorator decorator : decorators) {
+            node.addDecorator(decorator);
+        }
+
         return this;
     }
 

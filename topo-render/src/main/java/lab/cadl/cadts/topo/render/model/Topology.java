@@ -1,5 +1,8 @@
 package lab.cadl.cadts.topo.render.model;
 
+import lab.cadl.cadts.topo.render.model.exploit.ExploitGraph;
+import lab.cadl.cadts.topo.render.model.exploit.ExploitGraphBuilder;
+
 import java.awt.*;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -8,11 +11,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by lirui on 2017/11/1.
  */
 public class Topology {
     private Map<String, Node> nodeMap = new HashMap<>();
     private List<Link> linkList = new ArrayList<>();
+    private ExploitGraph exploitGraph;
 
     public Node queryNode(String name) {
         return nodeMap.get(name);
@@ -53,6 +56,18 @@ public class Topology {
 
     public Link addLink(String node1Name, String node2Name) {
         return addLink(checkNode(node1Name), checkNode(node2Name));
+    }
+
+    public ExploitGraph getExploitGraph() {
+        return exploitGraph;
+    }
+
+    public void setExploitGraph(ExploitGraph exploitGraph) {
+        this.exploitGraph = exploitGraph;
+    }
+
+    public ExploitGraphBuilder beginBuildExploitGraph() {
+        return new ExploitGraphBuilder(this);
     }
 
     public void display(PrintStream os) {

@@ -1,5 +1,7 @@
 package lab.cadl.cadts.topo.render.model;
 
+import lab.cadl.cadts.topo.render.model.decorators.BugDecorator;
+
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,5 +66,19 @@ public class Node {
 
     public void addDecorator(NodeDecorator decorator) {
         decoratorList.add(decorator);
+        decorator.setNode(this);
+    }
+
+    public BugDecorator checkBug(String vulnerabilityName) {
+        for (NodeDecorator decorator : decoratorList) {
+            if (decorator instanceof BugDecorator) {
+                BugDecorator bugDecorator = (BugDecorator) decorator;
+                if (bugDecorator.getVulnerability().getName().equals(vulnerabilityName)) {
+                    return bugDecorator;
+                }
+            }
+        }
+
+        throw new IllegalArgumentException(String.format("BUG %s not found", vulnerabilityName));
     }
 }

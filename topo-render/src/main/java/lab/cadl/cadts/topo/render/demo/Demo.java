@@ -5,15 +5,18 @@ import lab.cadl.cadts.topo.render.model.Topology;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Collections;
 
 /**
- * Created by lirui on 2017/11/1.
  */
 public class Demo {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
         Topology topology = new DemoTopologyGenerator().create();
         topology.display(System.out);
 
-        new PictureTopoRenderer().render(topology, new FileOutputStream("demo.png"));
+        try (FileOutputStream outputStream = new FileOutputStream("/tmp/demo.png")) {
+            new PictureTopoRenderer().render(topology, outputStream, Collections.emptyMap());
+        }
     }
 }
