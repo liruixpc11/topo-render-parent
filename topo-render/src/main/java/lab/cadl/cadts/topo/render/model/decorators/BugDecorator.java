@@ -67,8 +67,7 @@ public class BugDecorator extends NodeDecorator {
         this.vulnerability = vulnerability;
     }
 
-    public void exploit(int exploitIndex) {
-        this.index = exploitIndex;
+    public void exploit() {
         this.state = State.EXPLOITED;
     }
 
